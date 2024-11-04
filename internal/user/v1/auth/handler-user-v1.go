@@ -9,11 +9,6 @@ import (
 	"my-gin-app/internal/models"
 )
 
-type UserHandler interface {
-	Register(ctx *gin.Context)
-	Logine(ctx *gin.Context)
-}
-
 type UserHandlerImpl struct {
 	userService UserService
 }

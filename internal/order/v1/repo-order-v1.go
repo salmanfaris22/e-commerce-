@@ -33,3 +33,20 @@ func (or orderRepoImpl) DeleteOrderItem(orderID uint) error {
 func (or orderRepoImpl) DeleteOrder(order uint) error {
 	return or.config.DB.Where("id = ?", order).Delete(&models.Order{}).Error
 }
+func (or orderRepoImpl) CreatOrderAdress(address *models.Address) error {
+	return or.config.DB.Create(&address).Error
+}
+
+func (or orderRepoImpl) GetAllOrders(userID string, orders *[]models.Order) error {
+	return or.config.DB.Preload("Addresses").Preload("Items").Where("user_id = ? AND status!=?", userID, "canceled").Find(&orders).Error
+}
+func (or orderRepoImpl) GetOrderById(OrderID string, userID string, order *models.Order) error {
+	return or.config.DB.Where("id=? AND user_id=?", OrderID, userID).First(&order).Error
+}
+
+func (or orderRepoImpl) GetAllOrderProduct(orderId uint, orderProduct *[]models.OrderItem) error {
+	return or.config.DB.Where("order_id=?", orderId).Find(&orderProduct).Error
+}
+func (or orderRepoImpl) SaveMyOrder(order *models.Order) error {
+	return or.config.DB.Save(&order).Error
+}

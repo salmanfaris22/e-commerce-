@@ -6,11 +6,6 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-type CartHandler interface {
-	AddToCarthancler(ctx *gin.Context)
-	GetCartItemsHandler(ctx *gin.Context)
-}
-
 type cartHavndelerImpl struct {
 	cartServices CartServices
 }

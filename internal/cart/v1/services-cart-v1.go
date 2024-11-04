@@ -10,11 +10,6 @@ import (
 	"my-gin-app/internal/models"
 )
 
-type CartServices interface {
-	GetAllCartItems(userID string) (int, string, error, []models.CartItem)
-	AddToCartService(productId string, userId any, method string, qty int) (int, string, error)
-}
-
 type cartServiceImpl struct {
 	cartrepo CartRepo
 }

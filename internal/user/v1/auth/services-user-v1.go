@@ -10,11 +10,6 @@ import (
 	"my-gin-app/pkg/utils"
 )
 
-type UserService interface {
-	CreateUser(user models.User) (models.User, string, string, error)
-	LogineUser(user models.User) (models.User, string, string, error)
-}
-
 type UserServiceImpl struct {
 	userRepo UserRepo
 }

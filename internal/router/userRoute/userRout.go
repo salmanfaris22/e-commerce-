@@ -51,13 +51,14 @@ func UserRouter(r *gin.Engine, config *config.Config) {
 			}
 
 			orderRepo := order.NewOrderRepoV1(*config)
-			orderServices := order.NewOrderSerivesV1(orderRepo)
+			orderServices := order.NewOrderServiceV1(orderRepo)
 			orderHnalder := order.NewOrderHnalderV1(orderServices)
 
 			order := auth.Group("/order")
 			{
 				order.POST("/", orderHnalder.OrderItemsChckOut)
-
+				order.GET("/", orderHnalder.GetAllOrder)
+				order.PUT("/", orderHnalder.CancellOrder)
 			}
 		}
 	}

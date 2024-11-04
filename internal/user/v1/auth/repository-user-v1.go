@@ -1,16 +1,9 @@
-package repositories
+package auth
 
 import (
 	"my-gin-app/config"
 	"my-gin-app/internal/models"
 )
-
-type UserRepo interface {
-	Save(user *models.User) error
-	TokenSave(token *models.UserToken) error
-	FindByEmail(email string, user *models.User) error
-	FindRefreshToken(token *models.UserToken, id uint) error
-}
 
 type UserRepoImpl struct {
 	config *config.Config

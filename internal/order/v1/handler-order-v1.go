@@ -24,6 +24,49 @@ func (oh orderHandlerImpl) OrderItemsChckOut(ctx *gin.Context) {
 		return
 	}
 	userIDStr, _ := id.(string)
-	oh.serives.OrderItems(userIDStr, tempOrder)
+	address, order, statusCode, err := oh.serives.OrderItems(userIDStr, &tempOrder)
+	if err != nil {
+		ctx.JSON(statusCode, gin.H{"error": err.Error()})
+		return
+	}
+
+	ctx.JSON(http.StatusOK, gin.H{
+		"address": address,
+		"order":   order,
+		"message": "order successfully",
+	})
+}
+
+func (oh orderHandlerImpl) CancellOrder(ctx *gin.Context) {
+	id, _ := ctx.Get("user_Id")
+	OrderID := ctx.Query("orderId")
+	if OrderID == "" {
+		ctx.JSON(400, gin.H{
+			"message": "pleas select OrderId",
+		})
+		return
+	}
+	userIDStr, _ := id.(string)
+	statusCode, str, err := oh.serives.CanncleorderSerivices(OrderID, userIDStr)
+	if err != nil {
+		ctx.JSON(statusCode, gin.H{"error": err.Error()})
+		return
+	}
+	ctx.JSON(http.StatusOK, gin.H{
+		"message": str,
+	})
+}
+
+func (oh orderHandlerImpl) GetAllOrder(ctx *gin.Context) {
+	id, _ := ctx.Get("user_Id")
+	userIDStr, _ := id.(string)
+	order, statusCode, err := oh.serives.GetAllOrder(userIDStr)
+	if err != nil {
+		ctx.JSON(statusCode, gin.H{"error": err.Error()})
+		return
+	}
+	ctx.JSON(http.StatusOK, gin.H{
+		"message": order,
+	})
 
 }
