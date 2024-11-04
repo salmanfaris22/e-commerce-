@@ -1,7 +1,11 @@
 package order
 
 import (
+	"net/http"
+
 	"github.com/gin-gonic/gin"
+
+	"my-gin-app/internal/models"
 )
 
 type orderHandlerImpl struct {
@@ -13,6 +17,13 @@ func NewOrderHnalderV1(serives OrderService) Orderhandler {
 }
 
 func (oh orderHandlerImpl) OrderItemsChckOut(ctx *gin.Context) {
-	// var cart models.Cart
+	id, _ := ctx.Get("user_Id")
+	var tempOrder models.DemoOrder
+	if err := ctx.ShouldBindJSON(&tempOrder); err != nil {
+		ctx.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+	userIDStr, _ := id.(string)
+	oh.serives.OrderItems(userIDStr, tempOrder)
 
 }
