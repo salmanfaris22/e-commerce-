@@ -25,6 +25,7 @@ func UserRouter(r *gin.Engine, config *config.Config) {
 
 			userV1.POST("/register", userHandler.Register)
 			userV1.POST("/login", userHandler.Logine)
+			userV1.POST("/logout", userHandler.LogOut)
 
 		}
 
@@ -45,19 +46,23 @@ func UserRouter(r *gin.Engine, config *config.Config) {
 			cartrepo := cart.NewrepoCartV1(config)
 			cartSrvices := cart.NewServiceCartV1(cartrepo)
 			carthandler := cart.NewHandleCartV1(cartSrvices)
+
 			cart := auth.Group("/cart")
 			{
 				cart.POST("/", carthandler.AddToCarthancler)
 				cart.GET("/", carthandler.GetCartItemsHandler)
 			}
+
 			wishList := wishlist.NewWishListrepo(config)
 			wislistSerives := wishlist.NewWishlistServises(wishList)
 			wishlistHanlder := wishlist.NewWishListHanlder(wislistSerives)
+
 			wishlist := auth.Group("/wishlist")
 			{
 				wishlist.POST("/", wishlistHanlder.WishListController)
 				wishlist.GET("/", wishlistHanlder.GetAllwishlistItem)
 			}
+
 			orderRepo := order.NewOrderRepoV1(*config)
 			orderServices := order.NewOrderServiceV1(orderRepo)
 			orderHnalder := order.NewOrderHnalderV1(orderServices)

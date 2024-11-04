@@ -61,3 +61,11 @@ func (uh *UserHandlerImpl) Logine(ctx *gin.Context) {
 		"name":        newUser.FirstName,
 	})
 }
+func (uh *UserHandlerImpl) LogOut(ctx *gin.Context) {
+	ctx.Header("Authorization", "")
+	ctx.SetCookie("userId", "", -1, "/", "localhost", false, true)
+	ctx.SetCookie("refreshToken", "", -1, "/", "localhost", false, true)
+	ctx.JSON(http.StatusOK, gin.H{
+		"message": "logout successful",
+	})
+}

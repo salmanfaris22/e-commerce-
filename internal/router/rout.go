@@ -5,6 +5,7 @@ import (
 	"github.com/gin-gonic/gin"
 
 	"my-gin-app/config"
+	adminrout "my-gin-app/internal/router/adminRout"
 	userroute "my-gin-app/internal/router/userRoute"
 )
 
@@ -30,7 +31,7 @@ func (i *impel) Start() {
 	}))
 
 	userroute.UserRouter(i.gin, i.db)
-
+	adminrout.AdminRoutes(i.gin, i.db)
 	i.gin.Run()
 }
 

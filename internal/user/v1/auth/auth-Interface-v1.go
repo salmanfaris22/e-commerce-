@@ -9,6 +9,7 @@ import (
 type UserHandler interface {
 	Register(ctx *gin.Context)
 	Logine(ctx *gin.Context)
+	LogOut(ctx *gin.Context)
 }
 
 type UserRepo interface {
