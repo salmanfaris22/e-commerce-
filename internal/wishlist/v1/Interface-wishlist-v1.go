@@ -13,12 +13,15 @@ type WishListRepo interface {
 	FindWishlistItem(wishlistId uint, productId uint, listItem *models.WishlistItem) error
 	CreatWishlistItem(listItem *models.WishlistItem) error
 	DeleteWishlistItem(listItem *models.WishlistItem) error
+	GetWishlistItemsAll(userID string, wishlists *models.Wishlist) error
 }
 
 type WishListServices interface {
 	WishListAddremove(userID, productID string) (string, error)
+	GetAllWihslistItems(userId string) (string, []models.Product, error)
 }
 
 type WishListHandler interface {
 	WishListController(gin *gin.Context)
+	GetAllwishlistItem(ctx *gin.Context)
 }

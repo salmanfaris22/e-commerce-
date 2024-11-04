@@ -16,6 +16,25 @@ func NewWishlistServises(repo WishListRepo) WishListServices {
 	return &wishLisSerivestImpel{repo: repo}
 }
 
+func (ws wishLisSerivestImpel) GetAllWihslistItems(userId string) (string, []models.Product, error) {
+	var products []models.Product
+	var wishlists models.Wishlist
+	err := ws.repo.GetWishlistItemsAll(userId, &wishlists)
+	if err != nil {
+		return "you hanve no wishlist", products, err
+	}
+	for _, item := range wishlists.Items {
+		var product models.Product
+		newId := strconv.FormatUint(uint64(item.ID), 10)
+		err = ws.repo.GetPpduct(&product, newId)
+		if err != nil {
+			return "no Product avalible", products, err
+		}
+		products = append(products, product)
+	}
+	return "", products, nil
+}
+
 func (ws wishLisSerivestImpel) WishListAddremove(productID, userID string) (string, error) {
 	var product models.Product
 	err := ws.repo.GetPpduct(&product, productID)

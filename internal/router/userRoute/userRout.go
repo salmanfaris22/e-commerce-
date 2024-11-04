@@ -56,7 +56,7 @@ func UserRouter(r *gin.Engine, config *config.Config) {
 			wishlist := auth.Group("/wishlist")
 			{
 				wishlist.POST("/", wishlistHanlder.WishListController)
-				// wishlist.GET("/", wishlist.GetWishlistItems)
+				wishlist.GET("/", wishlistHanlder.GetAllwishlistItem)
 			}
 			orderRepo := order.NewOrderRepoV1(*config)
 			orderServices := order.NewOrderServiceV1(orderRepo)

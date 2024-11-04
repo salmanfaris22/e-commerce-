@@ -14,7 +14,7 @@ func NewWishListrepo(config *config.Config) WishListRepo {
 }
 
 func (wr wishListImpel) GetPpduct(product *models.Product, productId string) error {
-	return wr.config.DB.Find(&product, productId).Error
+	return wr.config.DB.Preload("Images").First(&product, productId).Error
 }
 
 func (wr wishListImpel) FindWishlist(userID string, wishlist *models.Wishlist) error {
@@ -32,4 +32,8 @@ func (wr wishListImpel) CreatWishlistItem(listItem *models.WishlistItem) error {
 
 func (wr wishListImpel) DeleteWishlistItem(listItem *models.WishlistItem) error {
 	return wr.config.DB.Delete(&listItem).Error
+}
+
+func (wr wishListImpel) GetWishlistItemsAll(userID string, wishlists *models.Wishlist) error {
+	return wr.config.DB.Preload("Items").Where("user_id = ?", userID).First(&wishlists).Error
 }
