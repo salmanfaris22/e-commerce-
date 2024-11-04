@@ -8,6 +8,7 @@ import (
 	"my-gin-app/internal/order/v1"
 	"my-gin-app/internal/product/v1"
 	"my-gin-app/internal/user/v1/auth"
+	"my-gin-app/internal/wishlist/v1"
 	"my-gin-app/pkg/middleware"
 )
 
@@ -49,7 +50,14 @@ func UserRouter(r *gin.Engine, config *config.Config) {
 				cart.POST("/", carthandler.AddToCarthancler)
 				cart.GET("/", carthandler.GetCartItemsHandler)
 			}
-
+			wishList := wishlist.NewWishListrepo(config)
+			wislistSerives := wishlist.NewWishlistServises(wishList)
+			wishlistHanlder := wishlist.NewWishListHanlder(wislistSerives)
+			wishlist := auth.Group("/wishlist")
+			{
+				wishlist.POST("/", wishlistHanlder.WishListController)
+				// wishlist.GET("/", wishlist.GetWishlistItems)
+			}
 			orderRepo := order.NewOrderRepoV1(*config)
 			orderServices := order.NewOrderServiceV1(orderRepo)
 			orderHnalder := order.NewOrderHnalderV1(orderServices)
