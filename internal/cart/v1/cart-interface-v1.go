@@ -19,9 +19,9 @@ type CartRepo interface {
 	GetProductModelById(product *models.Product, productID string) error
 	FindUserCart(userID string, cart *models.Cart) error
 	CartItemfind(cartId uint, productId uint, cartItem *models.CartItem) error
-	CreatCartItem(qty int, cart models.Cart, productId uint, cartItem *models.CartItem) error
+	CreatCartItem(cartItem *models.CartItem) error
 	DeleteCartItem(cartItem *models.CartItem) error
 	Updatecart(cartItem *models.CartItem) error
 	GetAllCartItems(cartItems *[]models.CartItem, cartId uint) error
-	CreatCart(cart *models.Cart, id uint) error
+	CreatCart(cart *models.Cart) error
 }

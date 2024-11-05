@@ -30,10 +30,7 @@ func (cr cartRepoImpl) CartItemfind(cartId uint, productId uint, cartItem *model
 	return cr.config.DB.Where("cart_id = ? AND product_id = ?", cartId, productId).First(&cartItem).Error
 }
 
-func (cr cartRepoImpl) CreatCartItem(qty int, cart models.Cart, productId uint, cartItem *models.CartItem) error {
-	cartItem.Quantity = qty
-	cartItem.ProductID = productId
-	cartItem.CartID = cart.ID
+func (cr cartRepoImpl) CreatCartItem(cartItem *models.CartItem) error {
 	return cr.config.DB.Create(&cartItem).Error
 }
 
@@ -42,8 +39,6 @@ func (cr cartRepoImpl) FindUserCart(userID string, cart *models.Cart) error {
 
 }
 
-func (cr cartRepoImpl) CreatCart(cart *models.Cart, id uint) error {
-
-	cart.UserID = id
+func (cr cartRepoImpl) CreatCart(cart *models.Cart) error {
 	return cr.config.DB.Create(&cart).Error
 }

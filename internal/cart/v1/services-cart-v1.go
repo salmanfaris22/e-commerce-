@@ -61,7 +61,8 @@ func (cs cartServiceImpl) AddToCartService(productId string, id any, method stri
 	if err != nil {
 		if err == gorm.ErrRecordNotFound {
 			conId, _ := strconv.Atoi(userIDStr)
-			err = cs.cartrepo.CreatCart(&cart, uint(conId))
+			cart.UserID = uint(conId)
+			err = cs.cartrepo.CreatCart(&cart)
 			if err != nil {
 				return http.StatusInternalServerError, "", err
 			}
@@ -76,7 +77,10 @@ func (cs cartServiceImpl) AddToCartService(productId string, id any, method stri
 
 	if err != nil {
 		if err == gorm.ErrRecordNotFound && qty > 0 {
-			err := cs.cartrepo.CreatCartItem(qty, cart, product.ID, &cartItem)
+			cartItem.Quantity = qty
+			cartItem.ProductID = product.ID
+			cartItem.CartID = cart.ID
+			err := cs.cartrepo.CreatCartItem(&cartItem)
 			if err != nil {
 				return http.StatusInternalServerError, "", errors.New("cart item creation error")
 			}

@@ -75,5 +75,4 @@ func UserRouter(r *gin.Engine, config *config.Config) {
 			}
 		}
 	}
-
 }
