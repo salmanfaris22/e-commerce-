@@ -14,12 +14,33 @@ func NewAdminProductReposetries(config *config.Config) AdminProductRepo {
 }
 
 func (apr adminProductREpoImpl) AddProduct(product *models.Product) error {
-	return apr.config.DB.Create(&product).Error
+	return apr.config.DB.Preload("Images").Create(&product).Error
 }
 
-func (apr adminProductREpoImpl) UpdateProdutcs(updates interface{}, id string) error {
-	return apr.config.DB.Model(&models.Product{}).Where("id=?", id).Updates(updates).Error
+func (apr adminProductREpoImpl) FindProduct(id string, existingProduct *models.Product) error {
+	return apr.config.DB.Preload("Images").First(&existingProduct, id).Error
+}
+
+func (apr adminProductREpoImpl) UpdateProdutcs(existingProduct *models.Product) error {
+	return apr.config.DB.Preload("Images").Save(&existingProduct).Error
 }
 func (apr adminProductREpoImpl) DeleteProductRepo(id string) error {
-	return apr.config.DB.Delete(&models.Product{}, id).Error
+	return apr.config.DB.Preload("Images").Delete(&models.Product{}, id).Error
+}
+
+func (apr adminProductREpoImpl) FindImges(id uint, existingIMG *models.ProductImage) error {
+	return apr.config.DB.First(&existingIMG, id).Error
+}
+func (apr adminProductREpoImpl) UpdateImges(existingIMG *models.ProductImage) error {
+	return apr.config.DB.Save(&existingIMG).Error
+}
+
+func (apr adminProductREpoImpl) SaveIMg(existingIMG *models.ProductImage) error {
+	return apr.config.DB.Create(&existingIMG).Error
+}
+func (apr adminProductREpoImpl) FindAllImages(id uint, existingIMG *[]models.ProductImage) error {
+	return apr.config.DB.Where("product_id=?", id).Find(&existingIMG).Error
+}
+func (apr adminProductREpoImpl) DeleteImaged(id uint) error {
+	return apr.config.DB.Delete(&models.ProductImage{}, id).Error
 }

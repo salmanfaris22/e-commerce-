@@ -1,6 +1,8 @@
 package adminproduct
 
 import (
+	"time"
+
 	"my-gin-app/internal/models"
 	"my-gin-app/pkg/validation"
 )
@@ -22,19 +24,78 @@ func (aps adminProductServiesImpl) AddProduct(product models.Product) error {
 	if err != nil {
 		return err
 	}
+	for _, img := range product.Images {
+		img.CreatedAt = time.Now()
+		img.ProductID = product.ID
+
+		if img.ID == 0 {
+			err = aps.repo.SaveIMg(&img)
+			if err != nil {
+				return err
+			}
+		} else {
+
+			err = aps.repo.UpdateImges(&img)
+			if err != nil {
+				return err
+			}
+		}
+	}
+
 	return nil
 }
-func (aps adminProductServiesImpl) UpdateProduct(updates interface{}, id string) error {
-	err := aps.repo.UpdateProdutcs(updates, id)
+func (aps adminProductServiesImpl) UpdateProduct(product models.Product, id string) error {
+	var existingProduct models.Product
+	err := aps.repo.FindProduct(id, &existingProduct)
 	if err != nil {
 		return err
 	}
-	return nil
+	existingProduct.Name = product.Name
+	existingProduct.Description = product.Description
+	existingProduct.Price = product.Price
+	existingProduct.Stock = product.Stock
+	existingProduct.IsAvailable = product.IsAvailable
+	existingProduct.CompanyName = product.CompanyName
+	existingProduct.Brand = product.Brand
+	existingProduct.Size = product.Size
+	existingProduct.Category = product.Category
+	existingProduct.UpdatedAt = time.Now()
+
+	for _, img := range product.Images {
+		var existingIMG models.ProductImage
+		err = aps.repo.FindImges(img.ID, &existingIMG)
+		if err != nil {
+			return err
+		}
+		existingIMG.URL = img.URL
+		existingIMG.URL = img.URL
+		existingIMG.UpdatedAt = time.Now()
+		existingIMG.IsMain = img.IsMain
+		existingIMG.ProductID = existingProduct.ID
+		err = aps.repo.UpdateImges(&existingIMG)
+		if err != nil {
+			return err
+		}
+	}
+
+	return aps.repo.UpdateProdutcs(&existingProduct)
 }
 func (aps adminProductServiesImpl) DeleteProduct(id string) error {
-	err := aps.repo.DeleteProductRepo(id)
+	var existingProduct models.Product
+	err := aps.repo.FindProduct(id, &existingProduct)
 	if err != nil {
 		return err
 	}
-	return nil
+	var images []models.ProductImage
+	err = aps.repo.FindAllImages(existingProduct.ID, &images)
+	if err != nil {
+		return err
+	}
+	for _, v := range images {
+		err = aps.repo.DeleteImaged(v.ID)
+		if err != nil {
+			return err
+		}
+	}
+	return aps.repo.DeleteProductRepo(id)
 }

@@ -39,8 +39,8 @@ func (aph adminProductahndlerImpl) AddProduct(ctx *gin.Context) {
 }
 func (aph adminProductahndlerImpl) EditProduct(ctx *gin.Context) {
 	id := ctx.Query("product_id")
-	updates := make(map[string]interface{})
-	err := ctx.BindJSON(&updates)
+	var product models.Product
+	err := ctx.BindJSON(&product)
 	if err != nil {
 		ctx.JSON(400, gin.H{
 			"message": "Invalid Product",
@@ -48,7 +48,8 @@ func (aph adminProductahndlerImpl) EditProduct(ctx *gin.Context) {
 		})
 		return
 	}
-	err = aph.services.UpdateProduct(updates, id)
+
+	err = aph.services.UpdateProduct(product, id)
 	if err != nil {
 		ctx.JSON(400, gin.H{
 			"message": "Invalid Product",
