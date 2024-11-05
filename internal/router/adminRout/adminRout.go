@@ -5,7 +5,9 @@ import (
 
 	"my-gin-app/config"
 	adminproduct "my-gin-app/internal/admin/admin-prodcut-controller/v1"
+	adminUser "my-gin-app/internal/admin/admin-user-controller/v1"
 	adminauth "my-gin-app/internal/admin/auth/v1"
+	"my-gin-app/pkg/middleware"
 )
 
 func AdminRoutes(r *gin.Engine, config *config.Config) {
@@ -17,10 +19,11 @@ func AdminRoutes(r *gin.Engine, config *config.Config) {
 		userHandler := adminauth.NewAdminUserHandlerV1(userServices)
 		auth := v1.Group("/admin")
 		{
-			auth.POST("/logine", userHandler.Logine)
+			auth.POST("/login", userHandler.Logine)
+			auth.POST("/logout", userHandler.LogOut)
 		}
 
-		admin := v1.Group("/auth")
+		admin := v1.Group("/auth", middleware.AdminMiddlware())
 		{
 			produtRepo := adminproduct.NewAdminProductReposetries(config)
 			produtServices := adminproduct.NewAdminProductServeces(produtRepo)
@@ -30,6 +33,17 @@ func AdminRoutes(r *gin.Engine, config *config.Config) {
 				product.POST("/add", productHnalder.AddProduct)
 				product.PUT("/update", productHnalder.EditProduct)
 				product.DELETE("/delete", productHnalder.DeleteProduct)
+			}
+			userRepo := adminUser.NewAdminUserrepo(config)
+			userServices := adminUser.NewAdminUserServices(userRepo)
+			userHndler := adminUser.NewAdminUserHandler(userServices)
+			user := admin.Group("/user")
+			{
+				user.GET("/", userHndler.GetUSer)
+				user.GET("/all", userHndler.GetAllUSer)
+				user.PUT("/update", userHndler.EditUser)
+				user.PUT("/block", userHndler.BlockUser)
+
 			}
 		}
 

@@ -36,3 +36,10 @@ func (uh *UserHandlerImpl) Logine(ctx *gin.Context) {
 		"message": "Logine successful",
 	})
 }
+
+func (uh *UserHandlerImpl) LogOut(ctx *gin.Context) {
+	ctx.SetCookie("adminToken", "", -1, "/", "localhost", false, true)
+	ctx.JSON(http.StatusOK, gin.H{
+		"message": "logout successful",
+	})
+}
