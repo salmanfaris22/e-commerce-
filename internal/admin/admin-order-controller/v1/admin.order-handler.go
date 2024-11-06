@@ -8,11 +8,6 @@ import (
 	"my-gin-app/internal/models"
 )
 
-type AdminOrderHandler interface {
-	GetAllOrderAdmin(ctx *gin.Context)
-	AdminOrderControll(ctx *gin.Context)
-}
-
 type adminOrderHandlerImpl struct {
 	services AdminOrderrServices
 }

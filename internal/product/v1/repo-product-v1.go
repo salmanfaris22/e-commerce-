@@ -20,7 +20,7 @@ func (pr producctRepoImpl) GetAllProductModel(product *[]models.Product) error {
 }
 
 func (pr producctRepoImpl) GetProductModelById(product *models.Product) error {
-	return pr.config.DB.Preload("Images").Where("id=?", product.ID).First(&product).Error
+	return pr.config.DB.Preload("Images").Preload("Reviews").Where("id=?", product.ID).First(&product).Error
 }
 func (pr producctRepoImpl) SearchProductRepo(product *[]models.Product, searchItem string) error {
 	return pr.config.DB.Preload("Images").Where("name ILIKE ? OR description ILIKE ? OR category ILIKE ? OR brand ILIKE ?", "%"+searchItem+"%", "%"+searchItem+"%", "%"+searchItem+"%", "%"+searchItem+"%").Find(&product).Error

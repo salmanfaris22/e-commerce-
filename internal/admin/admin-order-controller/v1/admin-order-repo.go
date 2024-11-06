@@ -7,13 +7,6 @@ import (
 	"my-gin-app/internal/models"
 )
 
-type AdminOrderRepo interface {
-	GetOrderQuary() *gorm.DB
-	GetAllOrder(query *gorm.DB, orders *[]models.Order) error
-	OrderStatusChncge(orders *models.Order, addreses *models.Address, orderItem *models.OrderItem) error
-	GetOrderById(orders *models.Order) error
-}
-
 type adminOrderRepoImpl struct {
 	config *config.Config
 }

@@ -2,11 +2,6 @@ package adminOrder
 
 import "my-gin-app/internal/models"
 
-type AdminOrderrServices interface {
-	AdminOrderStatus(orders *models.Order) error
-	GetAllOrderAdmin(status string) ([]models.Order, error)
-}
-
 type adminOrderServicesoImpl struct {
 	repo AdminOrderRepo
 }

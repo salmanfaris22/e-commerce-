@@ -6,6 +6,7 @@ import (
 	"my-gin-app/config"
 	"my-gin-app/internal/cart/v1"
 	"my-gin-app/internal/order/v1"
+	review "my-gin-app/internal/product/reviews/v1"
 	"my-gin-app/internal/product/v1"
 	"my-gin-app/internal/user/v1/auth"
 	"my-gin-app/internal/wishlist/v1"
@@ -61,6 +62,7 @@ func UserRouter(r *gin.Engine, config *config.Config) {
 			{
 				wishlist.POST("/", wishlistHanlder.WishListController)
 				wishlist.GET("/", wishlistHanlder.GetAllwishlistItem)
+
 			}
 
 			orderRepo := order.NewOrderRepoV1(*config)
@@ -72,6 +74,18 @@ func UserRouter(r *gin.Engine, config *config.Config) {
 				order.POST("/", orderHnalder.OrderItemsChckOut)
 				order.GET("/", orderHnalder.GetAllOrder)
 				order.PUT("/", orderHnalder.CancellOrder)
+			}
+
+			reviewRepo := review.NewRviewRepo(config)
+			reviewServices := review.NewRviewServies(reviewRepo)
+			reviewHnalder := review.NewRviewHandler(reviewServices)
+
+			review := auth.Group("/review")
+			{
+				review.POST("/add", reviewHnalder.AddReview)
+				review.DELETE("/", reviewHnalder.DeleteReviews)
+				review.PUT("/update", reviewHnalder.Updatedreview)
+				// review.PUT("/", reviewHnalder.CancellOrder)
 			}
 		}
 	}

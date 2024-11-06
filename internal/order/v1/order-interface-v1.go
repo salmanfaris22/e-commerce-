@@ -17,6 +17,7 @@ type OrderRepo interface {
 	CreateOrderItem(orderItems *models.OrderItem) error
 	FindProduct(product *models.Product, pID uint) error
 	SaveUpdateProduct(product *models.Product) error
+	CanleOrderModel(id uint) error
 	DeleteOrderItem(orderID uint) error
 	DeleteOrder(order uint) error
 	CreatOrderAdress(address *models.Address) error

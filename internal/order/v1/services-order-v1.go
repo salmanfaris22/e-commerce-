@@ -29,6 +29,10 @@ func (os orderServiceImpl) CanncleorderSerivices(OrderID string, userID string) 
 	if err != nil {
 		return http.StatusInternalServerError, "can't find Order", err
 	}
+
+	if err != nil {
+		return http.StatusInternalServerError, "can't find Order", err
+	}
 	err = os.repo.SaveMyOrder(&order)
 	if err != nil {
 		return http.StatusInternalServerError, "can't find Order", err
@@ -44,8 +48,9 @@ func (os orderServiceImpl) CancelOrderController(order *models.Order) error {
 		return err
 	}
 	for _, item := range orderProduct {
+		err = os.repo.CanleOrderModel(item.ID)
 		var product models.Product
-		err = os.repo.FindProduct(&product, item.ProductID)
+		err = os.repo.FindProduct(&product, item.ID)
 		if err != nil {
 			return err
 		}

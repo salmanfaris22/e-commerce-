@@ -50,3 +50,6 @@ func (or orderRepoImpl) GetAllOrderProduct(orderId uint, orderProduct *[]models.
 func (or orderRepoImpl) SaveMyOrder(order *models.Order) error {
 	return or.config.DB.Save(&order).Error
 }
+func (or orderRepoImpl) CanleOrderModel(id uint) error {
+	return or.config.DB.Model(&models.OrderItem{}).Where("id = ?", id).Update("order_status", "canceled").Error
+}

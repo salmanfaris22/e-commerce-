@@ -8,6 +8,7 @@ import (
 	adminproduct "my-gin-app/internal/admin/admin-prodcut-controller/v1"
 	adminUser "my-gin-app/internal/admin/admin-user-controller/v1"
 	adminauth "my-gin-app/internal/admin/auth/v1"
+	Admindashboard "my-gin-app/internal/admin/dashboard/v1"
 	"my-gin-app/pkg/middleware"
 )
 
@@ -55,6 +56,16 @@ func AdminRoutes(r *gin.Engine, config *config.Config) {
 				order.GET("/all", orderrHndler.GetAllOrderAdmin)
 				order.PUT("/controll", orderrHndler.AdminOrderControll)
 			}
+
+			dashboardRepo := Admindashboard.NewAdminDhasBoardpo(config)
+			dashboardServices := Admindashboard.NewAdminOrdeServices(dashboardRepo)
+			dashboardHndler := Admindashboard.NewAdminOrdeHanlder(dashboardServices)
+			dashboar := admin.Group("/dashboar")
+			{
+				dashboar.GET("/", dashboardHndler.AdmindashBoardGetAll)
+
+			}
+
 		}
 
 	}

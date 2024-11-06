@@ -8,8 +8,7 @@ import (
 )
 
 type Product struct {
-	ID uint `gorm:"primaryKey" json:"id"`
-	// UserID      uint           `json:"user_id"`
+	ID          uint           `gorm:"primaryKey" json:"id"`
 	Name        string         `json:"name" gorm:"not null" validate:"required,min=2,max=100"`
 	Description string         `json:"description" gorm:"not null" validate:"required,min=10,max=500"`
 	Price       float64        `json:"price" gorm:"not null" validate:"required,min=0"`
@@ -22,6 +21,7 @@ type Product struct {
 	CreatedAt   time.Time      `json:"created_at"`
 	UpdatedAt   time.Time      `json:"updated_at"`
 	Images      []ProductImage `gorm:"foreignKey:ProductID" json:"images"`
+	Reviews     []Review       `gorm:"foreignKey:ProductID" json:"reviews"`
 }
 
 type ProductImage struct {
