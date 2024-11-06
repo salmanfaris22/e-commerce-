@@ -18,6 +18,7 @@ type Reviewrepo interface {
 	Findreview(id string, userID string, review *models.Review) error
 	Updatereview(review *models.Review) error
 }
+
 type ReviewHandler interface {
 	AddReview(ctx *gin.Context)
 	DeleteReviews(ctx *gin.Context)

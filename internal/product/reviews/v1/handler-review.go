@@ -27,6 +27,7 @@ func (rh reviewHandlerImpl) DeleteReviews(ctx *gin.Context) {
 		})
 		return
 	}
+
 	ctx.JSON(200, gin.H{
 		"message": "you Deleted Review",
 	})
