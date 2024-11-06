@@ -61,6 +61,13 @@ func (ps producctServicesImpl) FilterProduct(filter models.Filter, Available, ma
 		}
 		filter.MinPrice = &minPrice
 	}
+	if maxPriceStr != "" {
+		maxPrice, err := strconv.ParseFloat(maxPriceStr, 64)
+		if err != nil {
+			return products, errors.New("valid min price")
+		}
+		filter.MaxPrice = &maxPrice
+	}
 	query := ps.Productrepo.FilterQuery()
 	if filter.MinPrice != nil {
 		query = query.Where("price >= ?", *filter.MinPrice)
@@ -77,6 +84,7 @@ func (ps producctServicesImpl) FilterProduct(filter models.Filter, Available, ma
 	if filter.Brand != "" {
 		query = query.Where("brand = ?", filter.Brand)
 	}
+
 	err := ps.Productrepo.QueryFindProduct(query, &products)
 	if err != nil {
 		return products, err

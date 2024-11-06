@@ -53,12 +53,6 @@ func (cs cartServiceImpl) AddToCartService(productId string, id any, method stri
 	var cart models.Cart
 	err = cs.cartrepo.FindUserCart(userIDStr, &cart)
 	if err != nil {
-		return http.StatusInternalServerError, "", err
-	}
-
-	var cartItem models.CartItem
-	err = cs.cartrepo.CartItemfind(cart.ID, product.ID, &cartItem)
-	if err != nil {
 		if err == gorm.ErrRecordNotFound {
 			conId, _ := strconv.Atoi(userIDStr)
 			cart.UserID = uint(conId)
@@ -69,7 +63,11 @@ func (cs cartServiceImpl) AddToCartService(productId string, id any, method stri
 		} else {
 			return http.StatusInternalServerError, "", err
 		}
+		return http.StatusInternalServerError, "", err
 	}
+
+	var cartItem models.CartItem
+	err = cs.cartrepo.CartItemfind(cart.ID, product.ID, &cartItem)
 	if method == "remove" {
 		cartItem.Quantity = 0
 		qty = 0

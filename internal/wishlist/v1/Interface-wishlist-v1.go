@@ -14,6 +14,8 @@ type WishListRepo interface {
 	CreatWishlistItem(listItem *models.WishlistItem) error
 	DeleteWishlistItem(listItem *models.WishlistItem) error
 	GetWishlistItemsAll(userID string, wishlists *models.Wishlist) error
+	GetWishlistItemsAllitem(id uint, wishlists *[]models.WishlistItem) error
+	FindProductById(product *models.Product, productId uint) error
 }
 
 type WishListServices interface {

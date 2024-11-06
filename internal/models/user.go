@@ -10,14 +10,13 @@ import (
 
 type UserToken struct {
 	ID        uint      `gorm:"primaryKey;autoIncrement" json:"id"`
-	UserID    uint      `gorm:"index" json:"user_id"` // Foreign key to User
+	UserID    uint      `gorm:"index" json:"user_id"`
 	Token     string    `gorm:"type:varchar(255);not null" json:"token"`
 	ExpiresAt time.Time `json:"expires_at"`
 	CreatedAt time.Time `gorm:"autoCreateTime" json:"created_at"`
 	UpdatedAt time.Time `gorm:"autoUpdateTime" json:"updated_at"`
 }
 
-// Define relationship in User struct
 type User struct {
 	ID                uint           `gorm:"primaryKey;autoIncrement" json:"id"`
 	Email             string         `gorm:"unique;type:varchar(100)" json:"email" validate:"required,email"`
@@ -47,20 +46,4 @@ func (u *User) BeforeCreate(tx *gorm.DB) (err error) {
 	}
 	u.Password = str
 	return
-}
-
-type DemoUser struct {
-	ID                uint           `json:"id"`
-	Email             string         `json:"email""`
-	FirstName         string         `json:"first_name"`
-	LastName          string         `json:"last_name"`
-	Password          string         `json:"password"`
-	Phone             string         `json:"phone"`
-	Role              string         `json:"role"`
-	ProfilePictureURL string         `json:"profile_picture_url,omitempty"`
-	IsVerified        bool           `json:"is_verified"`
-	IsActive          bool           `json:"is_active"`
-	CreatedAt         time.Time      `json:"created_at"`
-	UpdatedAt         time.Time      `json:"updated_at"`
-	DeletedAt         gorm.DeletedAt `json:"deleted_at"`
 }

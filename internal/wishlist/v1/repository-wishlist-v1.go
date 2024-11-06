@@ -37,3 +37,9 @@ func (wr wishListImpel) DeleteWishlistItem(listItem *models.WishlistItem) error 
 func (wr wishListImpel) GetWishlistItemsAll(userID string, wishlists *models.Wishlist) error {
 	return wr.config.DB.Preload("Items").Where("user_id = ?", userID).First(&wishlists).Error
 }
+func (wr wishListImpel) GetWishlistItemsAllitem(id uint, wishlists *[]models.WishlistItem) error {
+	return wr.config.DB.Where("wishlist_id = ?", id).Find(&wishlists).Error
+}
+func (wr wishListImpel) FindProductById(product *models.Product, productId uint) error {
+	return wr.config.DB.Preload("Images").Where("id=?", productId).First(&product).Error
+}

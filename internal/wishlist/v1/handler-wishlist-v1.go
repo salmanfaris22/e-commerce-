@@ -31,6 +31,7 @@ func (wh wishListHandlerImpl) WishListController(ctx *gin.Context) {
 func (wh wishListHandlerImpl) GetAllwishlistItem(ctx *gin.Context) {
 
 	id, _ := ctx.Get("user_Id")
+
 	userIDStr, _ := id.(string)
 	str, product, err := wh.servies.GetAllWihslistItems(userIDStr)
 	if err != nil {

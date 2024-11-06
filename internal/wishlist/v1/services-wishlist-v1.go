@@ -23,13 +23,15 @@ func (ws wishLisSerivestImpel) GetAllWihslistItems(userId string) (string, []mod
 	if err != nil {
 		return "you hanve no wishlist", products, err
 	}
-	for _, item := range wishlists.Items {
+	var listItem []models.WishlistItem
+	ws.repo.GetWishlistItemsAllitem(wishlists.ID, &listItem)
+	for _, item := range listItem {
 		var product models.Product
-		newId := strconv.FormatUint(uint64(item.ID), 10)
-		err = ws.repo.GetPpduct(&product, newId)
+		err = ws.repo.FindProductById(&product, item.ProductID)
 		if err != nil {
-			return "no Product avalible", products, err
+			return "you hanve no wishlist", products, err
 		}
+		product.ID = item.ProductID
 		products = append(products, product)
 	}
 	return "", products, nil
@@ -56,9 +58,7 @@ func (ws wishLisSerivestImpel) WishListAddremove(productID, userID string) (stri
 			} else {
 				return "product Can't find wishlist", err
 			}
-
 		}
-
 	}
 	var listItem models.WishlistItem
 	err = ws.repo.FindWishlistItem(wishlist.ID, product.ID, &listItem)
@@ -74,7 +74,6 @@ func (ws wishLisSerivestImpel) WishListAddremove(productID, userID string) (stri
 		} else {
 			return "Can't find list items", err
 		}
-
 	}
 	ws.repo.DeleteWishlistItem(&listItem)
 	if err != nil {

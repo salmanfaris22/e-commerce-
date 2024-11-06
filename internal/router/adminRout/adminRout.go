@@ -4,6 +4,7 @@ import (
 	"github.com/gin-gonic/gin"
 
 	"my-gin-app/config"
+	adminOrder "my-gin-app/internal/admin/admin-order-controller/v1"
 	adminproduct "my-gin-app/internal/admin/admin-prodcut-controller/v1"
 	adminUser "my-gin-app/internal/admin/admin-user-controller/v1"
 	adminauth "my-gin-app/internal/admin/auth/v1"
@@ -44,6 +45,15 @@ func AdminRoutes(r *gin.Engine, config *config.Config) {
 				user.PUT("/update", userHndler.EditUser)
 				user.PUT("/block", userHndler.BlockUser)
 
+			}
+
+			orderRepo := adminOrder.NewAdminOrderrepo(config)
+			orderServices := adminOrder.NewAdminOrdeServices(orderRepo)
+			orderrHndler := adminOrder.NewAdminOrdeHandler(orderServices)
+			order := admin.Group("/order")
+			{
+				order.GET("/all", orderrHndler.GetAllOrderAdmin)
+				order.PUT("/controll", orderrHndler.AdminOrderControll)
 			}
 		}
 

@@ -18,11 +18,12 @@ type Order struct {
 }
 
 type OrderItem struct {
-	ID        uint    `gorm:"primaryKey" json:"id" validate:"required"`
-	OrderID   uint    `json:"order_id" validate:"required"`
-	ProductID uint    `json:"product_id" validate:"required"`
-	Quantity  int     `json:"quantity" validate:"gte=1"`
-	Price     float64 `json:"price" validate:"gte=0"`
+	ID          uint    `gorm:"primaryKey" json:"id" validate:"required"`
+	OrderID     uint    `json:"order_id" validate:"required"`
+	ProductID   uint    `json:"product_id" validate:"required"`
+	Quantity    int     `json:"quantity" validate:"gte=1"`
+	Price       float64 `json:"price" validate:"gte=0"`
+	OrderStatus string  `json:"order_status" gorm:"default:'pending'"`
 }
 
 type DemoOrder struct {
