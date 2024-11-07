@@ -10,3 +10,7 @@ type userHandlerImpl struct {
 func NewUserHanlder(service UserServices) UserHandler {
 	return &userHandlerImpl{service: service}
 }
+
+func GetMyInforMations() {
+	// sss
+}
