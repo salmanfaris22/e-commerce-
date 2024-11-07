@@ -36,6 +36,7 @@ func (uh *UserHandlerImpl) Register(ctx *gin.Context) {
 		"message":     "register successful",
 		"accessToken": accessToken,
 		"name":        newUser.FirstName,
+		"user_id":     newUser.ID,
 	})
 }
 
@@ -59,6 +60,7 @@ func (uh *UserHandlerImpl) Logine(ctx *gin.Context) {
 		"message":     "Logine successful",
 		"accessToken": accessToken,
 		"name":        newUser.FirstName,
+		"user_id":     newUser.ID,
 	})
 }
 func (uh *UserHandlerImpl) LogOut(ctx *gin.Context) {

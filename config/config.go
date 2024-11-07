@@ -32,6 +32,7 @@ func connectDB() (*gorm.DB, error) {
 		&models.Admin{},
 		&models.UserToken{},
 		&models.ProductImage{},
+		&models.Payment{},
 	)
 	if err != nil {
 		return nil, fmt.Errorf("can't AutoMigrate: %w", err)

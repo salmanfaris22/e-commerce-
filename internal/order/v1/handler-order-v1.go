@@ -70,3 +70,25 @@ func (oh orderHandlerImpl) GetAllOrder(ctx *gin.Context) {
 	})
 
 }
+
+func (oh orderHandlerImpl) OrderChckOut(ctx *gin.Context) {
+	id, _ := ctx.Get("user_Id")
+	var adsress models.GetOrderdetils
+	err := ctx.ShouldBindJSON(&adsress)
+	if err != nil {
+		ctx.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+
+	userIDStr, _ := id.(string)
+
+	err = oh.serives.CheckOutOrdersfromcart(userIDStr, adsress)
+	if err != nil {
+		ctx.JSON(401, gin.H{"error": err.Error()})
+		return
+	}
+	ctx.JSON(http.StatusOK, gin.H{
+		"message": "checkout",
+	})
+
+}

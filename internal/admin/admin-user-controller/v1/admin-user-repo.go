@@ -20,7 +20,7 @@ func (aur adminUseImpl) UpdateUser(updateUser map[string]interface{}, user *mode
 	return aur.config.DB.Model(&models.User{}).Where("id = ?", id).Updates(updateUser).First(&user).Error
 }
 func (aur adminUseImpl) GetUserById(user *models.User, id string) error {
-	return aur.config.DB.Preload("Orders").Preload("Wishlist").Preload("Addresses").Preload("Cart").Where("id=?", id).First(&user).Error
+	return aur.config.DB.Preload("Orders.Addresses").Preload("Wishlist").Preload("Cart.Items.Product").Where("id=?", id).First(&user).Error
 }
 
 func (aur adminUseImpl) UserSave(user *models.User) error {

@@ -2,6 +2,7 @@ package cart
 
 import (
 	"errors"
+	"fmt"
 	"net/http" // Import net/http for HTTP status codes
 	"strconv"
 
@@ -74,19 +75,24 @@ func (cs cartServiceImpl) AddToCartService(productId string, id any, method stri
 	}
 
 	if err != nil {
+
 		if err == gorm.ErrRecordNotFound && qty > 0 {
+
 			cartItem.Quantity = qty
 			cartItem.ProductID = product.ID
 			cartItem.CartID = cart.ID
+
 			err := cs.cartrepo.CreatCartItem(&cartItem)
 			if err != nil {
 				return http.StatusInternalServerError, "", errors.New("cart item creation error")
 			}
 			return http.StatusOK, "Cart item added successfully", nil
 		} else {
-			return http.StatusInternalServerError, "", err
+			fmt.Println(err)
+			return http.StatusInternalServerError, err.Error(), err
 		}
 	} else {
+
 		if qty <= 0 {
 			cartItem.Quantity += qty
 			if cartItem.Quantity <= 0 {

@@ -22,6 +22,7 @@ func (or orderRepoImpl) CreateOrderItem(orderItems *models.OrderItem) error {
 }
 
 func (or orderRepoImpl) FindProduct(product *models.Product, pID uint) error {
+
 	return or.config.DB.Where("id=?", pID).First(&product).Error
 }
 func (or orderRepoImpl) SaveUpdateProduct(product *models.Product) error {
@@ -38,7 +39,7 @@ func (or orderRepoImpl) CreatOrderAdress(address *models.Address) error {
 }
 
 func (or orderRepoImpl) GetAllOrders(userID string, orders *[]models.Order) error {
-	return or.config.DB.Preload("Addresses").Preload("Items").Where("user_id = ? AND status!=?", userID, "canceled").Find(&orders).Error
+	return or.config.DB.Preload("Addresses").Preload("Items.Product").Where("user_id = ? AND status!=?", userID, "canceled").Find(&orders).Error
 }
 func (or orderRepoImpl) GetOrderById(OrderID string, userID string, order *models.Order) error {
 	return or.config.DB.Where("id=? AND user_id=?", OrderID, userID).First(&order).Error
@@ -52,4 +53,19 @@ func (or orderRepoImpl) SaveMyOrder(order *models.Order) error {
 }
 func (or orderRepoImpl) CanleOrderModel(id uint) error {
 	return or.config.DB.Model(&models.OrderItem{}).Where("id = ?", id).Update("order_status", "canceled").Error
+}
+
+func (or orderRepoImpl) FindUserCart(id string, cart *models.Cart) error {
+	return or.config.DB.Where("user_id", id).First(&cart).Error
+}
+func (or orderRepoImpl) FindcartItems(id uint, cartItems *[]models.CartItem) error {
+	return or.config.DB.Where("cart_id", id).Find(&cartItems).Error
+}
+
+func (or orderRepoImpl) DeleteCartItemsByCartID(cartID uint) error {
+	return or.config.DB.Where("cart_id = ?", cartID).Delete(&models.CartItem{}).Error
+}
+
+func (or orderRepoImpl) PaymentMetherd(paymen *models.Payment) error {
+	return or.config.DB.Save(&paymen).Error
 }

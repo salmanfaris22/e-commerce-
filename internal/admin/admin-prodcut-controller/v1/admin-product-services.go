@@ -50,35 +50,21 @@ func (aps adminProductServiesImpl) UpdateProduct(product models.Product, id stri
 	if err != nil {
 		return err
 	}
-	existingProduct.Name = product.Name
-	existingProduct.Description = product.Description
-	existingProduct.Price = product.Price
-	existingProduct.Stock = product.Stock
-	existingProduct.IsAvailable = product.IsAvailable
-	existingProduct.CompanyName = product.CompanyName
-	existingProduct.Brand = product.Brand
-	existingProduct.Size = product.Size
-	existingProduct.Category = product.Category
-	existingProduct.UpdatedAt = time.Now()
-
-	for _, img := range product.Images {
-		var existingIMG models.ProductImage
-		err = aps.repo.FindImges(img.ID, &existingIMG)
-		if err != nil {
-			return err
-		}
-		existingIMG.URL = img.URL
-		existingIMG.URL = img.URL
-		existingIMG.UpdatedAt = time.Now()
-		existingIMG.IsMain = img.IsMain
-		existingIMG.ProductID = existingProduct.ID
-		err = aps.repo.UpdateImges(&existingIMG)
+	for _, v := range existingProduct.Images {
+		err = aps.repo.DeleteImaged(v.ID)
 		if err != nil {
 			return err
 		}
 	}
 
-	return aps.repo.UpdateProdutcs(&existingProduct)
+	for _, img := range product.Images {
+		err = aps.repo.UpdateImges(&img)
+		if err != nil {
+			return err
+		}
+	}
+
+	return aps.repo.UpdateProdutcs(&product)
 }
 func (aps adminProductServiesImpl) DeleteProduct(id string) error {
 	var existingProduct models.Product

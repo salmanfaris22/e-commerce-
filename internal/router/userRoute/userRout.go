@@ -74,6 +74,7 @@ func UserRouter(r *gin.Engine, config *config.Config) {
 				order.POST("/", orderHnalder.OrderItemsChckOut)
 				order.GET("/", orderHnalder.GetAllOrder)
 				order.PUT("/", orderHnalder.CancellOrder)
+				order.POST("/checkout", orderHnalder.OrderChckOut)
 			}
 
 			reviewRepo := review.NewRviewRepo(config)
@@ -83,7 +84,7 @@ func UserRouter(r *gin.Engine, config *config.Config) {
 			review := auth.Group("/review")
 			{
 				review.POST("/add", reviewHnalder.AddReview)
-				review.DELETE("/", reviewHnalder.DeleteReviews)
+				review.DELETE("/delete", reviewHnalder.DeleteReviews)
 				review.PUT("/update", reviewHnalder.Updatedreview)
 				// review.PUT("/", reviewHnalder.CancellOrder)
 			}

@@ -13,7 +13,7 @@ func NewrepoCartV1(config *config.Config) CartRepo {
 	return &cartRepoImpl{config: *config}
 }
 func (cr cartRepoImpl) GetAllCartItems(cartItems *[]models.CartItem, cartId uint) error {
-	return cr.config.DB.Preload("Product").Where("cart_id=?", cartId).Find(&cartItems).Error
+	return cr.config.DB.Preload("Product.Images").Where("cart_id=?", cartId).Find(&cartItems).Error
 }
 func (cr cartRepoImpl) GetProductModelById(product *models.Product, productID string) error {
 	return cr.config.DB.Preload("Images").Where("id=?", productID).First(&product).Error

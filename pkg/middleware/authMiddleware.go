@@ -1,6 +1,7 @@
 package middleware
 
 import (
+	"fmt"
 	"net/http"
 	"strconv"
 	"strings"
@@ -40,6 +41,7 @@ func AuthMiddleware() gin.HandlerFunc {
 
 		refreshToken, err := ctx.Cookie("refreshToken")
 		if err != nil {
+			fmt.Println(err)
 			ctx.JSON(http.StatusUnauthorized, gin.H{"error": "Please log in"})
 			ctx.Abort()
 			return
