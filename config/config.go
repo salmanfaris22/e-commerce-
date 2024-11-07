@@ -9,7 +9,6 @@ import (
 	"my-gin-app/internal/models"
 )
 
-// connectDB initializes a database connection using GORM and returns a pointer to the DB instance.
 func connectDB() (*gorm.DB, error) {
 	dsn := "host=localhost user=postgres password=poomon dbname=newEcommers port=5432 sslmode=disable TimeZone=Asia/Shanghai"
 	db, err := gorm.Open(postgres.Open(dsn), &gorm.Config{})
@@ -17,7 +16,6 @@ func connectDB() (*gorm.DB, error) {
 		return nil, fmt.Errorf("failed to connect to the database: %w", err)
 	}
 
-	// Perform automatic migration for all the models.
 	err = db.AutoMigrate(
 		&models.User{},
 		&models.Address{},
