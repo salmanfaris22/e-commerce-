@@ -5,13 +5,14 @@ import (
 	"strconv"
 
 	"my-gin-app/internal/models"
+	review "my-gin-app/internal/user/reviews/interface"
 )
 
 type rviewServiesImpl struct {
-	repo Reviewrepo
+	repo review.Reviewrepo
 }
 
-func NewRviewServies(repo Reviewrepo) ReviewrServices {
+func NewRviewServies(repo review.Reviewrepo) review.ReviewrServices {
 	return &rviewServiesImpl{repo: repo}
 }
 

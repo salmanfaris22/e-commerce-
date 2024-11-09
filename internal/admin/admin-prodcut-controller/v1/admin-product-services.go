@@ -1,6 +1,7 @@
 package adminproduct
 
 import (
+	"fmt"
 	"time"
 
 	"my-gin-app/internal/models"
@@ -56,7 +57,7 @@ func (aps adminProductServiesImpl) UpdateProduct(product models.Product, id stri
 			return err
 		}
 	}
-
+	fmt.Println(product.Images)
 	for _, img := range product.Images {
 		err = aps.repo.UpdateImges(&img)
 		if err != nil {

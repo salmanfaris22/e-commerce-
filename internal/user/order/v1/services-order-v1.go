@@ -24,7 +24,7 @@ func (os orderServiceImpl) CanncleorderSerivices(OrderID string, userID string) 
 	if err != nil {
 		return http.StatusInternalServerError, "can't find Order", err
 	}
-	order.Status = "canceled"
+	order.Status = "Cancelled"
 	order.UpdatedAt = time.Now()
 	err = os.CancelOrderController(&order)
 	if err != nil {
@@ -115,7 +115,7 @@ func (os orderServiceImpl) OrderItems(id string, tempOrder *models.DemoOrder) (m
 		orderItems.Quantity = item.Quantity
 		orderItems.Price = item.Price
 		orderItems.ProductID = item.ProductID
-
+		orderItems.OrderStatus = "Pending"
 		err = os.repo.CreateOrderItem(&orderItems)
 		if err != nil {
 			return address, order, http.StatusInternalServerError, err
@@ -221,7 +221,7 @@ func (os orderServiceImpl) CheckOutOrdersfromcart(id string, tempOrder models.Ge
 
 		orderItems.Price = tempProduct.Price
 		orderItems.Quantity = item.Quantity
-		orderItems.OrderStatus = "pending"
+		orderItems.OrderStatus = "Pending"
 		orderItems.ProductID = item.ProductID
 		err = os.repo.CreateOrderItem(&orderItems)
 		if err != nil {

@@ -1,4 +1,4 @@
-package review
+package reviewHandler
 
 import (
 	"net/http"
@@ -6,13 +6,14 @@ import (
 	"github.com/gin-gonic/gin"
 
 	"my-gin-app/internal/models"
+	review "my-gin-app/internal/user/reviews/interface"
 )
 
 type reviewHandlerImpl struct {
-	services ReviewrServices
+	services review.ReviewrServices
 }
 
-func NewRviewHandler(services ReviewrServices) ReviewHandler {
+func NewRviewHandler(services review.ReviewrServices) review.ReviewHandler {
 	return &reviewHandlerImpl{services: services}
 }
 

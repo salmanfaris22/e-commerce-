@@ -52,6 +52,11 @@ func (ads admindashBoardServicesoImpl) AdminDashBoardServices() (models.Dashboar
 	if err != nil {
 		return response, err
 	}
+	sales, err := ads.repo.GetProductSalesByBrand()
+	if err != nil {
+		return response, err
+	}
+	response.ProductSales = sales
 	response.ProductAnalysis = ProductAnalist
 	return response, nil
 }

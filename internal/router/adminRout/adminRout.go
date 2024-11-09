@@ -54,6 +54,7 @@ func AdminRoutes(r *gin.Engine, config *config.Config) {
 			order := admin.Group("/order")
 			{
 				order.GET("/all", orderrHndler.GetAllOrderAdmin)
+				order.GET("/byid", orderrHndler.AdminOrderByID)
 				order.PUT("/controll", orderrHndler.AdminOrderControll)
 			}
 

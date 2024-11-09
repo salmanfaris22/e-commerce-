@@ -52,8 +52,8 @@ type DemoOrder struct {
 }
 
 type StatusCount struct {
-	Status string `json:"status"`
-	Count  int64  `json:"count"`
+	OrderStatus string `json:"order_status"`
+	Count       int    `json:"count"`
 }
 
 type ProductSummary struct {

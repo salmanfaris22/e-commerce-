@@ -42,6 +42,17 @@ func (or adminOrderHandlerImpl) AdminOrderControll(ctx *gin.Context) {
 		return
 	}
 	ctx.JSON(200, gin.H{
-		"message": orders,
+		"message": "orderUpdated ",
+	})
+}
+func (or adminOrderHandlerImpl) AdminOrderByID(ctx *gin.Context) {
+	order_id := ctx.Query("order_id")
+	order, err := or.services.OrderGetByID(order_id)
+	if err != nil {
+		ctx.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		return
+	}
+	ctx.JSON(200, gin.H{
+		"message": order,
 	})
 }

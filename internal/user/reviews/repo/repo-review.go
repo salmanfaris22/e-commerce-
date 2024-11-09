@@ -1,15 +1,16 @@
-package review
+package reviewrepo
 
 import (
 	"my-gin-app/config"
 	"my-gin-app/internal/models"
+	review "my-gin-app/internal/user/reviews/interface"
 )
 
 type rviewreporImpl struct {
 	config *config.Config
 }
 
-func NewRviewRepo(config *config.Config) Reviewrepo {
+func NewRviewRepo(config *config.Config) review.Reviewrepo {
 	return &rviewreporImpl{config: config}
 }
 

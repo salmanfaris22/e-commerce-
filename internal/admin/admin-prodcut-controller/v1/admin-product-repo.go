@@ -20,7 +20,6 @@ func (apr adminProductREpoImpl) AddProduct(product *models.Product) error {
 func (apr adminProductREpoImpl) FindProduct(id string, existingProduct *models.Product) error {
 	return apr.config.DB.Preload("Images").First(&existingProduct, id).Error
 }
-
 func (apr adminProductREpoImpl) UpdateProdutcs(existingProduct *models.Product) error {
 	return apr.config.DB.Preload("Images").Save(&existingProduct).Error
 }
@@ -39,14 +38,12 @@ func (apr adminProductREpoImpl) DeleteProductRepo(productID string) error {
 	}
 	return apr.config.DB.Preload("Images").Delete(&models.Product{}, productID).Error
 }
-
 func (apr adminProductREpoImpl) FindImges(id uint, existingIMG *models.ProductImage) error {
 	return apr.config.DB.First(&existingIMG, id).Error
 }
 func (apr adminProductREpoImpl) UpdateImges(existingIMG *models.ProductImage) error {
 	return apr.config.DB.Save(&existingIMG).Error
 }
-
 func (apr adminProductREpoImpl) SaveIMg(existingIMG *models.ProductImage) error {
 	return apr.config.DB.Create(&existingIMG).Error
 }

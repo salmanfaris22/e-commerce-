@@ -62,6 +62,7 @@ func (aph adminProductahndlerImpl) EditProduct(ctx *gin.Context) {
 	})
 
 }
+
 func (aph adminProductahndlerImpl) DeleteProduct(ctx *gin.Context) {
 	id := ctx.Query("product_id")
 	err := aph.services.DeleteProduct(id)

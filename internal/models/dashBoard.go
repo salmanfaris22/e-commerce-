@@ -8,4 +8,10 @@ type DashboardResponse struct {
 	OrderStatus      []StatusCount    `json:"order_status"`
 	TotalProfit      float64          `json:"total_profit"`
 	ProductAnalysis  []ProductAnalist `json:"product_analysis"`
+	ProductSales     []ProductSales
+}
+type ProductSales struct {
+	Brand        string  `json:"brand"`
+	TotalSold    int     `json:"total_sold"`
+	TotalRevenue float64 `json:"total_revenue"`
 }

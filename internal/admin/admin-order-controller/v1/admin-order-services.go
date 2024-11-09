@@ -1,6 +1,10 @@
 package adminOrder
 
-import "my-gin-app/internal/models"
+import (
+	"strconv"
+
+	"my-gin-app/internal/models"
+)
 
 type adminOrderServicesoImpl struct {
 	repo AdminOrderRepo
@@ -23,15 +27,29 @@ func (as adminOrderServicesoImpl) GetAllOrderAdmin(status string) ([]models.Orde
 	return orders, nil
 }
 func (as adminOrderServicesoImpl) AdminOrderStatus(orders *models.Order) error {
-	err := as.repo.GetOrderById(orders)
+	var demo models.Order
+	demo.ID = orders.ID
+	err := as.repo.GetOrderById(&demo)
 	if err != nil {
 		return err
 	}
-	addresses := orders.Addresses[0]
-	order_item := orders.Items[0]
-	err = as.repo.OrderStatusChncge(orders, &addresses, &order_item)
+	err = as.repo.UpdateOrder(orders)
 	if err != nil {
 		return err
 	}
 	return nil
+}
+
+func (as adminOrderServicesoImpl) OrderGetByID(order_id string) (models.Order, error) {
+	var orders models.Order
+	num, err := strconv.ParseUint(order_id, 10, 64)
+	if err != nil {
+		return orders, err
+	}
+	orders.ID = uint(num)
+	err = as.repo.GetOrderById(&orders)
+	if err != nil {
+		return orders, err
+	}
+	return orders, nil
 }

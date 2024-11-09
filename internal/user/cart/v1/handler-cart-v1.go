@@ -35,7 +35,7 @@ func (ch cartHavndelerImpl) GetCartItemsHandler(ctx *gin.Context) {
 
 func (ch cartHavndelerImpl) AddToCarthancler(ctx *gin.Context) {
 	productId := ctx.Query("productId")
-	method := ctx.Query("use")
+	method := ctx.Query("use") //->actions
 
 	id, _ := ctx.Get("user_Id")
 
@@ -43,6 +43,7 @@ func (ch cartHavndelerImpl) AddToCarthancler(ctx *gin.Context) {
 	if errs != nil {
 		qty = 1
 	}
+
 	status, str, errs := ch.cartServices.AddToCartService(productId, id, method, qty)
 	if errs != nil {
 		ctx.JSON(status, gin.H{

@@ -48,7 +48,7 @@ func (a adminDashBoardrRepoImpl) CountTotalProductsSold() (int64, error) {
 }
 func (a adminDashBoardrRepoImpl) GetOrderStatusCounts() ([]models.StatusCount, error) {
 	var statusCounts []models.StatusCount
-	err := a.config.DB.Model(&models.Order{}).Select("status, COUNT(*) AS count").Group("status").Scan(&statusCounts).Error
+	err := a.config.DB.Model(&models.OrderItem{}).Select("order_status, COUNT(*) AS count").Group("order_status").Scan(&statusCounts).Error
 
 	if err != nil {
 		return statusCounts, err
@@ -71,4 +71,16 @@ func (a adminDashBoardrRepoImpl) ProductSummers(productSummaries *[]models.Produ
 }
 func (a adminDashBoardrRepoImpl) FindProduct(tempProduct *models.Product, id uint) error {
 	return a.config.DB.Where("id=?", id).First(&tempProduct).Error
+}
+
+func (a adminDashBoardrRepoImpl) GetProductSalesByBrand() ([]models.ProductSales, error) {
+	var sales []models.ProductSales
+
+	err := a.config.DB.Table("order_items").
+		Select("products.brand, SUM(order_items.quantity) AS total_sold, SUM(order_items.quantity * order_items.price) AS total_revenue").
+		Joins("JOIN products ON products.id = order_items.product_id").
+		Group("products.brand").
+		Scan(&sales).Error
+
+	return sales, err
 }

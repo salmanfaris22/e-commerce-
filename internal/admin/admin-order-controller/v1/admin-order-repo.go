@@ -16,29 +16,29 @@ func NewAdminOrderrepo(config *config.Config) AdminOrderRepo {
 }
 
 func (ao adminOrderRepoImpl) GetOrderQuary() *gorm.DB {
-	return ao.config.DB.Model(&models.Order{}).Preload("Addresses").Preload("Items")
+	return ao.config.DB.Model(&models.Order{}).Preload("Addresses").Preload("Items.Product")
 }
 
 func (ao adminOrderRepoImpl) GetAllOrder(query *gorm.DB, orders *[]models.Order) error {
-	return query.Find(&orders).Error
+	return query.Preload("Addresses").Preload("Items.Product.Images").Find(&orders).Error
 }
 
 func (ao adminOrderRepoImpl) GetOrderById(orders *models.Order) error {
-	return ao.config.DB.Where("id=?", orders.ID).First(&orders).Preload("Addresses").Preload("Items").Error
+	return ao.config.DB.Preload("Addresses").Preload("Items.Product.Images").Where("id=?", orders.ID).First(&orders).Error
 }
 
-func (ao adminOrderRepoImpl) OrderStatusChncge(orders *models.Order, addreses *models.Address, orderItem *models.OrderItem) error {
-	err := ao.config.DB.Model(&models.Order{}).Where("id = ?", orders.ID).Updates(orders).Error
+func (or adminOrderRepoImpl) UpdateOrder(order *models.Order) error {
+
+	err := or.config.DB.Model(&models.Order{}).Where("id = ?", order.ID).Updates(order).Error
 	if err != nil {
 		return err
 	}
-	err = ao.config.DB.Model(&models.Address{}).Where("order_id = ?", orders.ID).Updates(addreses).Error
-	if err != nil {
-		return err
-	}
-	err = ao.config.DB.Model(&models.OrderItem{}).Where("order_id = ?", orders.ID).Updates(orderItem).Error
-	if err != nil {
-		return err
+
+	for _, item := range order.Items {
+		err = or.config.DB.Model(&models.OrderItem{}).Where("id = ?", item.ID).Updates(item).Error
+		if err != nil {
+			return err
+		}
 	}
 	return nil
 }

@@ -15,6 +15,7 @@ type AdminDashBoard interface {
 	CalculateTotalProfit() (float64, error)
 	ProductSummers(productSummaries *[]models.ProductSummary) error
 	FindProduct(tempProduct *models.Product, id uint) error
+	GetProductSalesByBrand() ([]models.ProductSales, error)
 }
 type AdminDashBoardInterface interface {
 	AdmindashBoardGetAll(ctx *gin.Context)
