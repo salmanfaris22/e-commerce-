@@ -4,13 +4,15 @@ import (
 	"strconv"
 
 	"github.com/gin-gonic/gin"
+
+	cartInterface "my-gin-app/internal/user/cart/interface"
 )
 
 type cartHavndelerImpl struct {
-	cartServices CartServices
+	cartServices cartInterface.CartServices
 }
 
-func NewHandleCartV1(services CartServices) CartHandler {
+func NewHandleCartV1(services cartInterface.CartServices) cartInterface.CartHandler {
 	return &cartHavndelerImpl{cartServices: services}
 }
 

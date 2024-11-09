@@ -1,17 +1,18 @@
-package product
+package productRepo
 
 import (
 	"gorm.io/gorm"
 
 	"my-gin-app/config"
 	"my-gin-app/internal/models"
+	productInterface "my-gin-app/internal/user/product/interface"
 )
 
 type producctRepoImpl struct {
 	config *config.Config
 }
 
-func NewProducctRepoV1(config *config.Config) ProductRepo {
+func NewProducctRepoV1(config *config.Config) productInterface.ProductRepo {
 	return &producctRepoImpl{config: config}
 }
 

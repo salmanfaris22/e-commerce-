@@ -1,15 +1,16 @@
-package auth
+package authrepo
 
 import (
 	"my-gin-app/config"
 	"my-gin-app/internal/models"
+	authInterface "my-gin-app/internal/user/auth/interface"
 )
 
 type UserRepoImpl struct {
 	config *config.Config
 }
 
-func NewUserRepoV1(config *config.Config) UserRepo {
+func NewUserRepoV1(config *config.Config) authInterface.UserRepo {
 	return &UserRepoImpl{config: config}
 }
 

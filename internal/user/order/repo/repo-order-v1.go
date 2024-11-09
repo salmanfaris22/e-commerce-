@@ -1,15 +1,16 @@
-package order
+package orderRepo
 
 import (
 	"my-gin-app/config"
 	"my-gin-app/internal/models"
+	orderInterface "my-gin-app/internal/user/order/interface"
 )
 
 type orderRepoImpl struct {
 	config config.Config
 }
 
-func NewOrderRepoV1(config config.Config) OrderRepo {
+func NewOrderRepoV1(config config.Config) orderInterface.OrderRepo {
 	return &orderRepoImpl{config: config}
 }
 

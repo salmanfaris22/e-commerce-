@@ -1,4 +1,4 @@
-package auth
+package authSevices
 
 import (
 	"errors"
@@ -7,14 +7,15 @@ import (
 	"gorm.io/gorm"
 
 	"my-gin-app/internal/models"
+	authInterface "my-gin-app/internal/user/auth/interface"
 	"my-gin-app/pkg/utils"
 )
 
 type UserServiceImpl struct {
-	userRepo UserRepo
+	userRepo authInterface.UserRepo
 }
 
-func NewUserServiceV1(repo UserRepo) UserService {
+func NewUserServiceV1(repo authInterface.UserRepo) authInterface.UserService {
 	return &UserServiceImpl{userRepo: repo}
 }
 

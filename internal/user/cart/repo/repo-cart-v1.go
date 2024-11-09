@@ -1,15 +1,16 @@
-package cart
+package cartRepo
 
 import (
 	"my-gin-app/config"
 	"my-gin-app/internal/models"
+	cartInterface "my-gin-app/internal/user/cart/interface"
 )
 
 type cartRepoImpl struct {
 	config config.Config
 }
 
-func NewrepoCartV1(config *config.Config) CartRepo {
+func NewrepoCartV1(config *config.Config) cartInterface.CartRepo {
 	return &cartRepoImpl{config: *config}
 }
 func (cr cartRepoImpl) GetAllCartItems(cartItems *[]models.CartItem, cartId uint) error {

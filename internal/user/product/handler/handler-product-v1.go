@@ -1,4 +1,4 @@
-package product
+package productHandler
 
 import (
 	"net/http"
@@ -6,13 +6,14 @@ import (
 	"github.com/gin-gonic/gin"
 
 	"my-gin-app/internal/models"
+	productInterface "my-gin-app/internal/user/product/interface"
 )
 
 type productImpl struct {
-	productService ProducctServices
+	productService productInterface.ProducctServices
 }
 
-func NewProductHandlerV1(services ProducctServices) ProductHandle {
+func NewProductHandlerV1(services productInterface.ProducctServices) productInterface.ProductHandle {
 	return &productImpl{productService: services}
 }
 

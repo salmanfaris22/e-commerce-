@@ -1,4 +1,4 @@
-package order
+package orderHandler
 
 import (
 	"net/http"
@@ -6,13 +6,14 @@ import (
 	"github.com/gin-gonic/gin"
 
 	"my-gin-app/internal/models"
+	orderInterface "my-gin-app/internal/user/order/interface"
 )
 
 type orderHandlerImpl struct {
-	serives OrderService
+	serives orderInterface.OrderService
 }
 
-func NewOrderHnalderV1(serives OrderService) Orderhandler {
+func NewOrderHnalderV1(serives orderInterface.OrderService) orderInterface.Orderhandler {
 	return &orderHandlerImpl{serives: serives}
 }
 

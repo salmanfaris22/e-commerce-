@@ -1,15 +1,16 @@
-package wishlist
+package wishlistRepo
 
 import (
 	"my-gin-app/config"
 	"my-gin-app/internal/models"
+	wishlistInterface "my-gin-app/internal/user/wishlist/interface"
 )
 
 type wishListImpel struct {
 	config config.Config
 }
 
-func NewWishListrepo(config *config.Config) WishListRepo {
+func NewWishListrepo(config *config.Config) wishlistInterface.WishListRepo {
 	return &wishListImpel{config: *config}
 }
 

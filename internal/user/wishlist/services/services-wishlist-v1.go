@@ -1,4 +1,4 @@
-package wishlist
+package wishlistServices
 
 import (
 	"strconv"
@@ -6,13 +6,14 @@ import (
 	"gorm.io/gorm"
 
 	"my-gin-app/internal/models"
+	wishlistInterface "my-gin-app/internal/user/wishlist/interface"
 )
 
 type wishLisSerivestImpel struct {
-	repo WishListRepo
+	repo wishlistInterface.WishListRepo
 }
 
-func NewWishlistServises(repo WishListRepo) WishListServices {
+func NewWishlistServises(repo wishlistInterface.WishListRepo) wishlistInterface.WishListServices {
 	return &wishLisSerivestImpel{repo: repo}
 }
 

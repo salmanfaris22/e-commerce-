@@ -1,4 +1,4 @@
-package cart
+package cartServices
 
 import (
 	"errors"
@@ -9,13 +9,14 @@ import (
 	"gorm.io/gorm"
 
 	"my-gin-app/internal/models"
+	cartInterface "my-gin-app/internal/user/cart/interface"
 )
 
 type cartServiceImpl struct {
-	cartrepo CartRepo
+	cartrepo cartInterface.CartRepo
 }
 
-func NewServiceCartV1(repo CartRepo) CartServices {
+func NewServiceCartV1(repo cartInterface.CartRepo) cartInterface.CartServices {
 	return &cartServiceImpl{cartrepo: repo}
 }
 

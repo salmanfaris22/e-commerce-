@@ -1,17 +1,18 @@
-package product
+package productServices
 
 import (
 	"errors"
 	"strconv"
 
 	"my-gin-app/internal/models"
+	productInterface "my-gin-app/internal/user/product/interface"
 )
 
 type producctServicesImpl struct {
-	Productrepo ProductRepo
+	Productrepo productInterface.ProductRepo
 }
 
-func NewProducctServicesV1(repo ProductRepo) ProducctServices {
+func NewProducctServicesV1(repo productInterface.ProductRepo) productInterface.ProducctServices {
 	return &producctServicesImpl{Productrepo: repo}
 }
 

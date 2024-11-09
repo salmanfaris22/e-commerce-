@@ -1,4 +1,4 @@
-package order
+package orderServices
 
 import (
 	"errors"
@@ -8,13 +8,14 @@ import (
 	"time"
 
 	"my-gin-app/internal/models"
+	orderInterface "my-gin-app/internal/user/order/interface"
 )
 
 type orderServiceImpl struct {
-	repo OrderRepo
+	repo orderInterface.OrderRepo
 }
 
-func NewOrderServiceV1(repo OrderRepo) OrderService {
+func NewOrderServiceV1(repo orderInterface.OrderRepo) orderInterface.OrderService {
 	return &orderServiceImpl{repo: repo}
 }
 

@@ -1,4 +1,4 @@
-package auth
+package authHandler
 
 import (
 	"net/http"
@@ -7,13 +7,14 @@ import (
 	"github.com/gin-gonic/gin"
 
 	"my-gin-app/internal/models"
+	authInterface "my-gin-app/internal/user/auth/interface"
 )
 
 type UserHandlerImpl struct {
-	userService UserService
+	userService authInterface.UserService
 }
 
-func NewUserHandlerV1(service UserService) UserHandler {
+func NewUserHandlerV1(service authInterface.UserService) authInterface.UserHandler {
 	return &UserHandlerImpl{userService: service}
 }
 

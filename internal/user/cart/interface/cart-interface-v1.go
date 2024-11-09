@@ -1,4 +1,4 @@
-package cart
+package cartInterface
 
 import (
 	"github.com/gin-gonic/gin"

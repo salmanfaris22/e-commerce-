@@ -1,16 +1,18 @@
-package wishlist
+package wishlistHandler
 
 import (
 	"net/http"
 
 	"github.com/gin-gonic/gin"
+
+	wishlistInterface "my-gin-app/internal/user/wishlist/interface"
 )
 
 type wishListHandlerImpl struct {
-	servies WishListServices
+	servies wishlistInterface.WishListServices
 }
 
-func NewWishListHanlder(servies WishListServices) WishListHandler {
+func NewWishListHanlder(servies wishlistInterface.WishListServices) wishlistInterface.WishListHandler {
 	return &wishListHandlerImpl{servies: servies}
 }
 

@@ -1,17 +1,27 @@
-package userroute
+package userrouteHandler
 
 import (
 	"github.com/gin-gonic/gin"
 
 	"my-gin-app/config"
-	"my-gin-app/internal/user/auth/v1"
-	"my-gin-app/internal/user/cart/v1"
-	"my-gin-app/internal/user/order/v1"
-	"my-gin-app/internal/user/product/v1"
+	authHandler "my-gin-app/internal/user/auth/handler"
+	authrepo "my-gin-app/internal/user/auth/repo"
+	authSevices "my-gin-app/internal/user/auth/services"
+	cartHandler "my-gin-app/internal/user/cart/handler"
+	cartRepo "my-gin-app/internal/user/cart/repo"
+	cartServices "my-gin-app/internal/user/cart/services"
+	orderHandler "my-gin-app/internal/user/order/handler"
+	orderRepo "my-gin-app/internal/user/order/repo"
+	orderServices "my-gin-app/internal/user/order/service"
+	productHandler "my-gin-app/internal/user/product/handler"
+	productRepo "my-gin-app/internal/user/product/repo"
+	productServices "my-gin-app/internal/user/product/services"
 	reviewHandler "my-gin-app/internal/user/reviews/handler"
 	reviewrepo "my-gin-app/internal/user/reviews/repo"
 	reviewServices "my-gin-app/internal/user/reviews/services"
-	"my-gin-app/internal/user/wishlist/v1"
+	wishlistHandler "my-gin-app/internal/user/wishlist/handler"
+	wishlistRepo "my-gin-app/internal/user/wishlist/repo"
+	wishlistServices "my-gin-app/internal/user/wishlist/services"
 	"my-gin-app/pkg/middleware"
 )
 
@@ -19,9 +29,9 @@ func UserRouter(r *gin.Engine, config *config.Config) {
 
 	v1 := r.Group("/v1")
 	{
-		userRepo := auth.NewUserRepoV1(config)
-		userServices := auth.NewUserServiceV1(userRepo)
-		userHandler := auth.NewUserHandlerV1(userServices)
+		userRepo := authrepo.NewUserRepoV1(config)
+		userServices := authSevices.NewUserServiceV1(userRepo)
+		userHandler := authHandler.NewUserHandlerV1(userServices)
 
 		userV1 := v1.Group("/user")
 		{
@@ -30,9 +40,9 @@ func UserRouter(r *gin.Engine, config *config.Config) {
 			userV1.POST("/logout", userHandler.LogOut)
 		}
 
-		productRepo := product.NewProducctRepoV1(config)
-		productServices := product.NewProducctServicesV1(productRepo)
-		productHandler := product.NewProductHandlerV1(productServices)
+		productRepo := productRepo.NewProducctRepoV1(config)
+		productServices := productServices.NewProducctServicesV1(productRepo)
+		productHandler := productHandler.NewProductHandlerV1(productServices)
 
 		product := v1.Group("/product")
 		{
@@ -44,9 +54,9 @@ func UserRouter(r *gin.Engine, config *config.Config) {
 
 		auth := v1.Group("/auth", middleware.AuthMiddleware())
 		{
-			cartrepo := cart.NewrepoCartV1(config)
-			cartSrvices := cart.NewServiceCartV1(cartrepo)
-			carthandler := cart.NewHandleCartV1(cartSrvices)
+			cartrepo := cartRepo.NewrepoCartV1(config)
+			cartSrvices := cartServices.NewServiceCartV1(cartrepo)
+			carthandler := cartHandler.NewHandleCartV1(cartSrvices)
 
 			cart := auth.Group("/cart")
 			{
@@ -54,9 +64,9 @@ func UserRouter(r *gin.Engine, config *config.Config) {
 				cart.GET("/", carthandler.GetCartItemsHandler)
 			}
 
-			wishList := wishlist.NewWishListrepo(config)
-			wislistSerives := wishlist.NewWishlistServises(wishList)
-			wishlistHanlder := wishlist.NewWishListHanlder(wislistSerives)
+			wishList := wishlistRepo.NewWishListrepo(config)
+			wislistSerives := wishlistServices.NewWishlistServises(wishList)
+			wishlistHanlder := wishlistHandler.NewWishListHanlder(wislistSerives)
 
 			wishlist := auth.Group("/wishlist")
 			{
@@ -64,9 +74,9 @@ func UserRouter(r *gin.Engine, config *config.Config) {
 				wishlist.GET("/", wishlistHanlder.GetAllwishlistItem)
 			}
 
-			orderRepo := order.NewOrderRepoV1(*config)
-			orderServices := order.NewOrderServiceV1(orderRepo)
-			orderHnalder := order.NewOrderHnalderV1(orderServices)
+			orderRepo := orderRepo.NewOrderRepoV1(*config)
+			orderServices := orderServices.NewOrderServiceV1(orderRepo)
+			orderHnalder := orderHandler.NewOrderHnalderV1(orderServices)
 
 			order := auth.Group("/order")
 			{

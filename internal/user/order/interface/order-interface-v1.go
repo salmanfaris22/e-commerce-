@@ -1,4 +1,4 @@
-package order
+package orderInterface
 
 import (
 	"github.com/gin-gonic/gin"
