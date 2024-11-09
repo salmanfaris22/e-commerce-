@@ -1,7 +1,8 @@
-package Admindashboard
+package AdmindashboardRepo
 
 import (
 	"my-gin-app/config"
+	AdmindashboardInterface "my-gin-app/internal/admin/dashboard/interface"
 	"my-gin-app/internal/models"
 )
 
@@ -9,7 +10,7 @@ type adminDashBoardrRepoImpl struct {
 	config *config.Config
 }
 
-func NewAdminDhasBoardpo(config *config.Config) AdminDashBoard {
+func NewAdminDhasBoardpo(config *config.Config) AdmindashboardInterface.AdminDashBoard {
 	return &adminDashBoardrRepoImpl{config: config}
 }
 

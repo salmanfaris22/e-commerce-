@@ -1,14 +1,15 @@
-package Admindashboard
+package AdmindashboardServices
 
 import (
+	AdmindashboardInterface "my-gin-app/internal/admin/dashboard/interface"
 	"my-gin-app/internal/models"
 )
 
 type admindashBoardServicesoImpl struct {
-	repo AdminDashBoard
+	repo AdmindashboardInterface.AdminDashBoard
 }
 
-func NewAdminOrdeServices(repo AdminDashBoard) AdminDashBoardServies {
+func NewAdminOrdeServices(repo AdmindashboardInterface.AdminDashBoard) AdmindashboardInterface.AdminDashBoardServies {
 	return &admindashBoardServicesoImpl{repo: repo}
 }
 

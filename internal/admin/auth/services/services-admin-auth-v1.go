@@ -1,17 +1,18 @@
-package adminauth
+package adminauthServices
 
 import (
 	"errors"
 
+	adminauthInterface "my-gin-app/internal/admin/auth/interface"
 	"my-gin-app/internal/models"
 	"my-gin-app/pkg/utils"
 )
 
 type UserServiceImpl struct {
-	userRepo UserRepo
+	userRepo adminauthInterface.UserRepo
 }
 
-func NewAdminUserServiceV1(repo UserRepo) UserService {
+func NewAdminUserServiceV1(repo adminauthInterface.UserRepo) adminauthInterface.UserService {
 	return &UserServiceImpl{userRepo: repo}
 }
 

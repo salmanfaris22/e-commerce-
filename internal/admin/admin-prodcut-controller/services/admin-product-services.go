@@ -1,18 +1,19 @@
-package adminproduct
+package adminproductServices
 
 import (
 	"fmt"
 	"time"
 
+	adminproductInterFace "my-gin-app/internal/admin/admin-prodcut-controller/interface"
 	"my-gin-app/internal/models"
 	"my-gin-app/pkg/validation"
 )
 
 type adminProductServiesImpl struct {
-	repo AdminProductRepo
+	repo adminproductInterFace.AdminProductRepo
 }
 
-func NewAdminProductServeces(repo AdminProductRepo) AdminProductServices {
+func NewAdminProductServeces(repo adminproductInterFace.AdminProductRepo) adminproductInterFace.AdminProductServices {
 	return &adminProductServiesImpl{repo: repo}
 }
 

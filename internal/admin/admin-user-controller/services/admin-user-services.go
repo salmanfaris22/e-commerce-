@@ -1,14 +1,15 @@
-package adminUser
+package adminUserServices
 
 import (
+	adminUserInterface "my-gin-app/internal/admin/admin-user-controller/interface"
 	"my-gin-app/internal/models"
 )
 
 type adminUserServicesImpl struct {
-	repo AdminUserrepo
+	repo adminUserInterface.AdminUserrepo
 }
 
-func NewAdminUserServices(repo AdminUserrepo) AdminUserServices {
+func NewAdminUserServices(repo adminUserInterface.AdminUserrepo) adminUserInterface.AdminUserServices {
 	return &adminUserServicesImpl{repo: repo}
 }
 

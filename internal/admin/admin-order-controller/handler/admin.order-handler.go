@@ -1,18 +1,19 @@
-package adminOrder
+package adminOrderHandler
 
 import (
 	"net/http"
 
 	"github.com/gin-gonic/gin"
 
+	adminOrderInterFace "my-gin-app/internal/admin/admin-order-controller/interface"
 	"my-gin-app/internal/models"
 )
 
 type adminOrderHandlerImpl struct {
-	services AdminOrderrServices
+	services adminOrderInterFace.AdminOrderrServices
 }
 
-func NewAdminOrdeHandler(services AdminOrderrServices) AdminOrderHandler {
+func NewAdminOrdeHandler(services adminOrderInterFace.AdminOrderrServices) adminOrderInterFace.AdminOrderHandler {
 	return &adminOrderHandlerImpl{services: services}
 }
 

@@ -1,16 +1,17 @@
-package adminOrder
+package adminOrderServices
 
 import (
 	"strconv"
 
+	adminOrderInterFace "my-gin-app/internal/admin/admin-order-controller/interface"
 	"my-gin-app/internal/models"
 )
 
 type adminOrderServicesoImpl struct {
-	repo AdminOrderRepo
+	repo adminOrderInterFace.AdminOrderRepo
 }
 
-func NewAdminOrdeServices(repo AdminOrderRepo) AdminOrderrServices {
+func NewAdminOrdeServices(repo adminOrderInterFace.AdminOrderRepo) adminOrderInterFace.AdminOrderrServices {
 	return &adminOrderServicesoImpl{repo: repo}
 }
 

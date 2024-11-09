@@ -1,16 +1,18 @@
-package Admindashboard
+package AdmindashboardHandler
 
 import (
 	"net/http"
 
 	"github.com/gin-gonic/gin"
+
+	AdmindashboardInterface "my-gin-app/internal/admin/dashboard/interface"
 )
 
 type admindashBoardHhanlderImpl struct {
-	services AdminDashBoardServies
+	services AdmindashboardInterface.AdminDashBoardServies
 }
 
-func NewAdminOrdeHanlder(services AdminDashBoardServies) AdminDashBoardInterface {
+func NewAdminOrdeHanlder(services AdmindashboardInterface.AdminDashBoardServies) AdmindashboardInterface.AdminDashBoardInterface {
 	return &admindashBoardHhanlderImpl{services: services}
 }
 

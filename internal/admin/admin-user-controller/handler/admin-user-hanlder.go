@@ -1,14 +1,16 @@
-package adminUser
+package adminUserHandler
 
 import (
 	"github.com/gin-gonic/gin"
+
+	adminUserInterface "my-gin-app/internal/admin/admin-user-controller/interface"
 )
 
 type adminUserHandlerImpl struct {
-	service AdminUserServices
+	service adminUserInterface.AdminUserServices
 }
 
-func NewAdminUserHandler(service AdminUserServices) AdminUserHandler {
+func NewAdminUserHandler(service adminUserInterface.AdminUserServices) adminUserInterface.AdminUserHandler {
 	return &adminUserHandlerImpl{service: service}
 }
 

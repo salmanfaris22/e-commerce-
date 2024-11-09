@@ -1,16 +1,17 @@
-package adminproduct
+package adminproductHandler
 
 import (
 	"github.com/gin-gonic/gin"
 
+	adminproductInterFace "my-gin-app/internal/admin/admin-prodcut-controller/interface"
 	"my-gin-app/internal/models"
 )
 
 type adminProductahndlerImpl struct {
-	services AdminProductServices
+	services adminproductInterFace.AdminProductServices
 }
 
-func NewAdminProductHandler(services AdminProductServices) AdminProductHandler {
+func NewAdminProductHandler(services adminproductInterFace.AdminProductServices) adminproductInterFace.AdminProductHandler {
 	return &adminProductahndlerImpl{services: services}
 }
 

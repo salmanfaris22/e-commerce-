@@ -4,11 +4,21 @@ import (
 	"github.com/gin-gonic/gin"
 
 	"my-gin-app/config"
-	adminOrder "my-gin-app/internal/admin/admin-order-controller/v1"
-	adminproduct "my-gin-app/internal/admin/admin-prodcut-controller/v1"
-	adminUser "my-gin-app/internal/admin/admin-user-controller/v1"
-	adminauth "my-gin-app/internal/admin/auth/v1"
-	Admindashboard "my-gin-app/internal/admin/dashboard/v1"
+	adminOrderHandler "my-gin-app/internal/admin/admin-order-controller/handler"
+	adminOrderRepo "my-gin-app/internal/admin/admin-order-controller/repo"
+	adminOrderServices "my-gin-app/internal/admin/admin-order-controller/services"
+	adminproductHandler "my-gin-app/internal/admin/admin-prodcut-controller/handler"
+	adminproductRepo "my-gin-app/internal/admin/admin-prodcut-controller/repo"
+	adminproductServices "my-gin-app/internal/admin/admin-prodcut-controller/services"
+	adminUserHandler "my-gin-app/internal/admin/admin-user-controller/handler"
+	adminUserRepo "my-gin-app/internal/admin/admin-user-controller/repo"
+	adminUserServices "my-gin-app/internal/admin/admin-user-controller/services"
+	adminauthHandler "my-gin-app/internal/admin/auth/handler"
+	adminauthRepo "my-gin-app/internal/admin/auth/repo"
+	adminauthServices "my-gin-app/internal/admin/auth/services"
+	AdmindashboardHandler "my-gin-app/internal/admin/dashboard/handler"
+	AdmindashboardRepo "my-gin-app/internal/admin/dashboard/repo"
+	AdmindashboardServices "my-gin-app/internal/admin/dashboard/services"
 	"my-gin-app/pkg/middleware"
 )
 
@@ -16,9 +26,9 @@ func AdminRoutes(r *gin.Engine, config *config.Config) {
 	v1 := r.Group("/v1")
 	{
 
-		userRepo := adminauth.NewAdminUserRepoV1(config)
-		userServices := adminauth.NewAdminUserServiceV1(userRepo)
-		userHandler := adminauth.NewAdminUserHandlerV1(userServices)
+		userRepo := adminauthRepo.NewAdminUserRepoV1(config)
+		userServices := adminauthServices.NewAdminUserServiceV1(userRepo)
+		userHandler := adminauthHandler.NewAdminUserHandlerV1(userServices)
 		auth := v1.Group("/admin")
 		{
 			auth.POST("/login", userHandler.Logine)
@@ -27,18 +37,18 @@ func AdminRoutes(r *gin.Engine, config *config.Config) {
 
 		admin := v1.Group("/auth", middleware.AdminMiddlware())
 		{
-			produtRepo := adminproduct.NewAdminProductReposetries(config)
-			produtServices := adminproduct.NewAdminProductServeces(produtRepo)
-			productHnalder := adminproduct.NewAdminProductHandler(produtServices)
+			produtRepo := adminproductRepo.NewAdminProductReposetries(config)
+			produtServices := adminproductServices.NewAdminProductServeces(produtRepo)
+			productHnalder := adminproductHandler.NewAdminProductHandler(produtServices)
 			product := admin.Group("/product")
 			{
 				product.POST("/add", productHnalder.AddProduct)
 				product.PUT("/update", productHnalder.EditProduct)
 				product.DELETE("/delete", productHnalder.DeleteProduct)
 			}
-			userRepo := adminUser.NewAdminUserrepo(config)
-			userServices := adminUser.NewAdminUserServices(userRepo)
-			userHndler := adminUser.NewAdminUserHandler(userServices)
+			userRepo := adminUserRepo.NewAdminUserrepo(config)
+			userServices := adminUserServices.NewAdminUserServices(userRepo)
+			userHndler := adminUserHandler.NewAdminUserHandler(userServices)
 			user := admin.Group("/user")
 			{
 				user.GET("/", userHndler.GetUSer)
@@ -48,9 +58,9 @@ func AdminRoutes(r *gin.Engine, config *config.Config) {
 
 			}
 
-			orderRepo := adminOrder.NewAdminOrderrepo(config)
-			orderServices := adminOrder.NewAdminOrdeServices(orderRepo)
-			orderrHndler := adminOrder.NewAdminOrdeHandler(orderServices)
+			orderRepo := adminOrderRepo.NewAdminOrderrepo(config)
+			orderServices := adminOrderServices.NewAdminOrdeServices(orderRepo)
+			orderrHndler := adminOrderHandler.NewAdminOrdeHandler(orderServices)
 			order := admin.Group("/order")
 			{
 				order.GET("/all", orderrHndler.GetAllOrderAdmin)
@@ -58,9 +68,9 @@ func AdminRoutes(r *gin.Engine, config *config.Config) {
 				order.PUT("/controll", orderrHndler.AdminOrderControll)
 			}
 
-			dashboardRepo := Admindashboard.NewAdminDhasBoardpo(config)
-			dashboardServices := Admindashboard.NewAdminOrdeServices(dashboardRepo)
-			dashboardHndler := Admindashboard.NewAdminOrdeHanlder(dashboardServices)
+			dashboardRepo := AdmindashboardRepo.NewAdminDhasBoardpo(config)
+			dashboardServices := AdmindashboardServices.NewAdminOrdeServices(dashboardRepo)
+			dashboardHndler := AdmindashboardHandler.NewAdminOrdeHanlder(dashboardServices)
 			dashboar := admin.Group("/dashboar")
 			{
 				dashboar.GET("/", dashboardHndler.AdmindashBoardGetAll)

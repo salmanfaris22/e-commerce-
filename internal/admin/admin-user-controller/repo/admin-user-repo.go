@@ -1,7 +1,8 @@
-package adminUser
+package adminUserRepo
 
 import (
 	"my-gin-app/config"
+	adminUserInterface "my-gin-app/internal/admin/admin-user-controller/interface"
 	"my-gin-app/internal/models"
 )
 
@@ -9,7 +10,7 @@ type adminUseImpl struct {
 	config *config.Config
 }
 
-func NewAdminUserrepo(config *config.Config) AdminUserrepo {
+func NewAdminUserrepo(config *config.Config) adminUserInterface.AdminUserrepo {
 	return &adminUseImpl{config: config}
 }
 

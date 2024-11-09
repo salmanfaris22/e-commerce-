@@ -1,7 +1,8 @@
-package adminproduct
+package adminproductRepo
 
 import (
 	"my-gin-app/config"
+	adminproductInterFace "my-gin-app/internal/admin/admin-prodcut-controller/interface"
 	"my-gin-app/internal/models"
 )
 
@@ -9,7 +10,7 @@ type adminProductREpoImpl struct {
 	config *config.Config
 }
 
-func NewAdminProductReposetries(config *config.Config) AdminProductRepo {
+func NewAdminProductReposetries(config *config.Config) adminproductInterFace.AdminProductRepo {
 	return &adminProductREpoImpl{config: config}
 }
 

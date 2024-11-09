@@ -1,9 +1,10 @@
-package adminOrder
+package adminOrderRepo
 
 import (
 	"gorm.io/gorm"
 
 	"my-gin-app/config"
+	adminOrderInterFace "my-gin-app/internal/admin/admin-order-controller/interface"
 	"my-gin-app/internal/models"
 )
 
@@ -11,7 +12,7 @@ type adminOrderRepoImpl struct {
 	config *config.Config
 }
 
-func NewAdminOrderrepo(config *config.Config) AdminOrderRepo {
+func NewAdminOrderrepo(config *config.Config) adminOrderInterFace.AdminOrderRepo {
 	return &adminOrderRepoImpl{config: config}
 }
 
