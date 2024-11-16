@@ -17,7 +17,6 @@ type UserHandlerImpl struct {
 func NewUserHandlerV1(service authInterface.UserService) authInterface.UserHandler {
 	return &UserHandlerImpl{userService: service}
 }
-
 func (uh *UserHandlerImpl) Register(ctx *gin.Context) {
 	var user models.User
 	if err := ctx.BindJSON(&user); err != nil {
@@ -29,10 +28,8 @@ func (uh *UserHandlerImpl) Register(ctx *gin.Context) {
 		ctx.JSON(http.StatusBadRequest, gin.H{"error": "invalid user information", "details": err.Error()})
 		return
 	}
-
 	ctx.Header("Authorization", "Bearer "+accessToken)
 	ctx.SetCookie("refreshToken", refreshToken, int(7*24*time.Hour), "/", "localhost", true, true)
-
 	ctx.JSON(200, gin.H{
 		"message":     "register successful",
 		"accessToken": accessToken,

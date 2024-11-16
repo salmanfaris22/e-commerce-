@@ -1,4 +1,4 @@
-package adminproduct
+package adminproductInterFace
 
 import (
 	"github.com/gin-gonic/gin"

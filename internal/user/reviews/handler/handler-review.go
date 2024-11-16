@@ -33,6 +33,7 @@ func (rh reviewHandlerImpl) DeleteReviews(ctx *gin.Context) {
 		"message": "you Deleted Review",
 	})
 }
+
 func (rh reviewHandlerImpl) Updatedreview(ctx *gin.Context) {
 	var review models.Review
 	pid := ctx.Query("review_id")

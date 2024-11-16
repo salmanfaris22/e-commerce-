@@ -1,4 +1,4 @@
-package adminauth
+package adminauthInterface
 
 import (
 	"github.com/gin-gonic/gin"

@@ -1,4 +1,4 @@
-package Admindashboard
+package AdmindashboardInterface
 
 import (
 	"github.com/gin-gonic/gin"

@@ -1,4 +1,4 @@
-package wishlist
+package wishlistInterface
 
 import (
 	"github.com/gin-gonic/gin"

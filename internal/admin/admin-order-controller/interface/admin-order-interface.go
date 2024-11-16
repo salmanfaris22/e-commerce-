@@ -1,4 +1,4 @@
-package adminOrder
+package adminOrderInterFace
 
 import (
 	"github.com/gin-gonic/gin"

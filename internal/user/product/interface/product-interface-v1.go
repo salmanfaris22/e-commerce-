@@ -1,4 +1,4 @@
-package product
+package productInterface
 
 import (
 	"github.com/gin-gonic/gin"
